@@ -1,4 +1,4 @@
-from matplotlib import pyplot as plt, image as mpimg
+from matplotlib import pyplot as plt
 
 
 class ImageProcessor:
