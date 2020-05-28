@@ -12,7 +12,7 @@ class NumPyCreator:
 
     @staticmethod
     def from_iterable(itr):
-        return np.array(itr)
+        return np.fromiter(itr, dtype=None)
 
     @staticmethod
     def from_shape(shape, value):
@@ -25,3 +25,13 @@ class NumPyCreator:
     @staticmethod
     def identity(n):
         return np.identity(n)
+
+
+if __name__ == "__main__":
+    c = NumPyCreator()
+    print('list:     ', c.from_list([1, 2, 3]))
+    print('tuple:    ', c.from_tuple((1, 2, 3)))
+    print('iterable: ', c.from_iterable(iter([1, 2, 3])))
+    print('shape:    ', c.from_shape((10, 2), 10))
+    print('random:   ', c.random((4)))
+    print('identity: ', c.identity(2))
