@@ -8,12 +8,12 @@ class ScrapBooker:
         Crops the 2D-array with the given dimensions,
         whose top left corner is given by position
         """
-
         if dimensions[0] >= array.shape[0]\
            or dimensions[1] >= array.shape[0]\
            or position[0] >= array.shape[0]\
            or position[1] >= array.shape[1]:
             return None
+
         end = (position[0] + dimensions[0], position[1] + dimensions[1])
         return array[position[0]:end[0], position[1]:end[1]]
 
@@ -26,6 +26,7 @@ class ScrapBooker:
         """
         if n == 0:
             return array
+
         return np.delete(array, slice(n - 1, None, n),
                          axis=0 if axis == 1 else 1)
 
