@@ -127,26 +127,27 @@ class ColorFilter:
             return None
 
 
-imp = ImageProcessor()
-arr = imp.load('test.png')
+if __name__ == '__main__':
+    imp = ImageProcessor()
+    arr = imp.load('test.png')
 
-grm = ColorFilter.to_grayscale(arr, 'm')
-imp.display(grm)
+    grm = ColorFilter.to_grayscale(arr, 'm')
+    imp.display(grm)
 
-grm = ColorFilter.to_grayscale(arr, 'w')
-imp.display(grm)
+    grm = ColorFilter.to_grayscale(arr, 'w')
+    imp.display(grm)
 
-inv = ColorFilter.invert(arr)
-imp.display(inv)
+    inv = ColorFilter.invert(arr)
+    imp.display(inv)
 
-blu = ColorFilter.to_blue(arr)
-imp.display(blu)
+    blu = ColorFilter.to_blue(arr)
+    imp.display(blu)
 
-gre = ColorFilter.to_green(arr)
-imp.display(gre)
+    gre = ColorFilter.to_green(arr)
+    imp.display(gre)
 
-red = ColorFilter.to_red(arr)
-imp.display(red)
+    red = ColorFilter.to_red(arr)
+    imp.display(red)
 
-cel = ColorFilter.celluloid(arr)
-imp.display(cel)
+    cel = ColorFilter.celluloid(arr)
+    imp.display(cel)
