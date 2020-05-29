@@ -71,11 +71,9 @@ class ColorFilter:
         Takes a numpy array of an image and
         returns an array with a red filter
         """
-        result = np.zeros(array.shape)
-
-        for row in range(array.shape[0]):
-            for pixel in range(array.shape[1]):
-                result[row][pixel][0] = array[row][pixel][0]
+        green = ColorFilter.to_green(array)
+        blue = ColorFilter.to_blue(array)
+        result = array - (green + blue)
 
         return result
 
