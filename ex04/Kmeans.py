@@ -33,37 +33,21 @@ class KmeansClustering:
           This function should not raise any Exception.
         """
         for iteration in range(self.max_iter):
-            old_centroids = self.centroids.copy()
-
             clusters = []
 
             for i in range(self.ncentroid):
                 clusters.append([])
                 rand = random.randint(0, len(X) - 1)
                 self.centroids[i] = X[rand]
-                # ax.scatter(*X[rand], marker='^', color='red')
 
             for x in X:
-                min_dist = float('inf')
                 nearest = self.nearest_centroid(x)
                 clusters[nearest].append(x)
-                # ax.scatter(*x, color=color)
 
             for i in range(self.ncentroid):
                 self.centroids[i] = numpy.mean(numpy.array(clusters[i]),
                                                axis=0)
-
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        ax.set_xlabel('Height')
-        ax.set_ylabel('Weight')
-        ax.set_zlabel('Bone Density')
-        colors = ('b', 'g', 'r', 'c', 'm')
-        for i, c in enumerate(clusters):
-            for x in c:
-                ax.scatter(*x, color=colors[i])
-            ax.scatter(*self.centroids[i], color='k')
-        plt.show()
+        self.clusters = clusters
 
     def predict(self, X):
         """
@@ -80,9 +64,29 @@ class KmeansClustering:
 
 
 if __name__ == "__main__":
-    k = KmeansClustering()
+    ncentroid = 4
+    k = KmeansClustering(ncentroid=ncentroid)
 
     X = numpy.genfromtxt('solar_system_census.csv', delimiter=",",
                          skip_header=1, usecols=range(1, 4))
     k.fit(X)
-    k.predict(X[0])
+    # Low weight: Venus
+    # Tall: Martian
+    # Tallest, lowest bone density: Citizens of the Belt
+    martian = [185, 60, 0.8]
+    k.predict(martian)
+    print(f"HEIGHT         WEIGHT        BONE DENSITY")
+    print(*k.centroids, sep='\n')
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.set_xlabel('Height')
+    ax.set_ylabel('Weight')
+    ax.set_zlabel('Bone Density')
+    colors = numpy.linspace(0, 1.1, ncentroid)
+    for i, c in enumerate(k.clusters):
+        color = plt.cm.RdYlBu(colors[i])
+        for x in c:
+            ax.scatter(*x, color=color)
+        ax.scatter(*k.centroids[i], s=200, color=color)
+    plt.show()
