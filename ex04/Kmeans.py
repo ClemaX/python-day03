@@ -11,6 +11,15 @@ class KmeansClustering:
         for i in range(ncentroid):
             self.centroids.append(None)
 
+    def nearest_centroid(self, X):
+        min_dist = float("inf")
+        for i, c in enumerate(self.centroids):
+            dist = numpy.linalg.norm(X - c)
+            if dist < min_dist:
+                min_dist = dist
+                nearest = i
+        return nearest
+
     def fit(self, X):
         """
         Run the K-means clustering algorithm.
@@ -36,11 +45,7 @@ class KmeansClustering:
 
             for x in X:
                 min_dist = float('inf')
-                for i, c in enumerate(self.centroids):
-                    dist = numpy.linalg.norm(x - c)
-                    if dist < min_dist:
-                        min_dist = dist
-                        nearest = i
+                nearest = self.nearest_centroid(x)
                 clusters[nearest].append(x)
                 # ax.scatter(*x, color=color)
 
@@ -70,12 +75,8 @@ class KmeansClustering:
         Raises:
           This function should not raise any Exception.
         """
-        for i, c in enumerate(self.centroids):
-            dist = numpy.linalg.norm(X - c)
-            if dist < min_dist:
-                min_dist = dist
-                nearest = i
-        print(i)
+        nearest = self.nearest_centroid(X)
+        print('Nearest centroid: ', self.centroids[nearest])
 
 
 if __name__ == "__main__":
@@ -84,3 +85,4 @@ if __name__ == "__main__":
     X = numpy.genfromtxt('solar_system_census.csv', delimiter=",",
                          skip_header=1, usecols=range(1, 4))
     k.fit(X)
+    k.predict(X[0])
