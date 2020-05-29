@@ -20,7 +20,8 @@ class ScrapBooker:
     @staticmethod
     def thin(array, n, axis):
         """
-        Deletes every n-th pixel row along the specified axis
+        Deletes every n-th pixel row of the 2D-array
+        along the specified axis
 
         Axis: 0 -> vertical, 1-> horizontal
         """
